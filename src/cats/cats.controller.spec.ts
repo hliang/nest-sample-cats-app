@@ -2,6 +2,7 @@ import { Test } from '@nestjs/testing';
 import { CatsController } from './cats.controller';
 import { CatsService } from './cats.service';
 import { Cat } from './interfaces/cat.interface';
+import {CACHE_MANAGER} from "@nestjs/cache-manager";
 
 describe('CatsController', () => {
   let catsController: CatsController;
@@ -10,7 +11,7 @@ describe('CatsController', () => {
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
       controllers: [CatsController],
-      providers: [CatsService],
+      providers: [CatsService, { provide: CACHE_MANAGER, useValue: {} }],
     }).compile();
 
     catsService = moduleRef.get<CatsService>(CatsService);
@@ -26,7 +27,7 @@ describe('CatsController', () => {
           name: 'Pixel',
         },
       ];
-      jest.spyOn(catsService, 'findAll').mockImplementation(() => result);
+      jest.spyOn(catsService, 'findAll').mockResolvedValue(result);
 
       expect(await catsController.findAll()).toBe(result);
     });
