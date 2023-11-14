@@ -6,8 +6,6 @@ import { FoobarMiddleware } from './common/middleware/foobar.middleware';
 
 @Module({
   imports: [
-    CoreModule,
-    CatsModule,
     LoggerModule.forRoot(
       {
         pinoHttp: {
@@ -16,6 +14,8 @@ import { FoobarMiddleware } from './common/middleware/foobar.middleware';
         }
       }
     ),
+    CoreModule,
+    CatsModule,
   ],
 })
 export class AppModule {
