@@ -11,8 +11,16 @@ export class FoobarMiddleware implements NestMiddleware {
 }
 
   use(req: any, res: any, next: () => void) {
-    console.log(`Request...`);
-    this.logger.info("foobar middleware called. We want to have reqId in this log.");
+    this.logger.info("FoobarMiddleware Request received"); // no request id here
+
+    const originalSend = res.send;
+    res.send = (rawBody: unknown): Response => {
+      this.logger.info("FoobarMiddleware Response sent"); // request id present
+
+      res.send = originalSend;
+      return res.send(rawBody);
+    };
+
     next();
   }
 }
