@@ -1,7 +1,8 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { LoggingInterceptor } from './interceptors/logging.interceptor';
 import { TransformInterceptor } from './interceptors/transform.interceptor';
+import { FoobarMiddleware } from '../common/middleware/foobar.middleware';
 
 @Module({
   providers: [
@@ -9,4 +10,8 @@ import { TransformInterceptor } from './interceptors/transform.interceptor';
     { provide: APP_INTERCEPTOR, useClass: LoggingInterceptor },
   ],
 })
-export class CoreModule {}
+export class CoreModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(FoobarMiddleware).forRoutes("*");
+  }
+}

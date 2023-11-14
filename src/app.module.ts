@@ -2,7 +2,7 @@ import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { LoggerModule } from 'nestjs-pino';
 import { CatsModule } from './cats/cats.module';
 import { CoreModule } from './core/core.module';
-import { FoobarMiddleware } from './common/middleware/foobar.middleware';
+// import { FoobarMiddleware } from './common/middleware/foobar.middleware';
 
 @Module({
   imports: [
@@ -19,7 +19,7 @@ import { FoobarMiddleware } from './common/middleware/foobar.middleware';
   ],
 })
 export class AppModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(FoobarMiddleware).forRoutes("*");
-  }
+  // configure(consumer: MiddlewareConsumer) {
+  //   consumer.apply(FoobarMiddleware).forRoutes("*");
+  // }
 }
